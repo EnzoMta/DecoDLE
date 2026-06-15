@@ -20,6 +20,9 @@
                 <flux:sidebar.item icon="face-smile" :href="route('game.emoji')" :current="request()->routeIs('game.emoji')" wire:navigate>
                     {{ __('Emoji') }}
                 </flux:sidebar.item>
+                <flux:sidebar.item icon="photo" :href="route('game.photo')" :current="request()->routeIs('game.photo')" wire:navigate>
+                    {{ __('Photo') }}
+                </flux:sidebar.item>
             </flux:sidebar.group>
         </flux:sidebar.nav>
 
