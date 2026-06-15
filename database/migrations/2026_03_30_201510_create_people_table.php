@@ -19,7 +19,8 @@ return new class extends Migration
             $table->integer('age');        
             $table->unsignedSmallInteger('height');              
             $table->string('hair_color');         
-            $table->string('city');               
+            $table->string('city');          
+            $table->string('origin')->nullable();     
             $table->string('hobby');     
             $table->string('specialization');         
             $table->timestamps();

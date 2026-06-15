@@ -20,6 +20,7 @@ class Person extends Model
         'height',
         'hair_color',
         'city',
+        'origin',
         'hobby',
         'specialization',
     ];
