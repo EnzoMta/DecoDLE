@@ -13,10 +13,6 @@ Route::get('/photos/{filename}', function (string $filename) {
     return response()->file($path);
 })->name('photos.show');
 
-Route::middleware(['auth', 'verified'])->group(function () {
-    Route::view('dashboard', 'dashboard')->name('dashboard');
-});
-
 Route::livewire('game/classic', Classic::class)->name('game.classic');
 Route::livewire('game/emoji', Emoji::class)->name('game.emoji');
 Route::livewire('game/photo', Photo::class)->name('game.photo');
