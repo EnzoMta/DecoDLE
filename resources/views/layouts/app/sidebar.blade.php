@@ -17,6 +17,9 @@
                 <flux:sidebar.item icon="user" :href="route('game.classic')" :current="request()->routeIs('game.classic')" wire:navigate>
                     {{ __('Classique') }}
                 </flux:sidebar.item>
+                <flux:sidebar.item icon="face-smile" :href="route('game.emoji')" :current="request()->routeIs('game.emoji')" wire:navigate>
+                    {{ __('Emoji') }}
+                </flux:sidebar.item>
             </flux:sidebar.group>
         </flux:sidebar.nav>
 
