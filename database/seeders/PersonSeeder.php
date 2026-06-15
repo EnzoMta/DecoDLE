@@ -1,0 +1,108 @@
+<?php
+ 
+namespace Database\Seeders;
+ 
+use App\Models\Person;
+use Illuminate\Database\Seeder;
+ 
+class PersonSeeder extends Seeder
+{
+    public function run(): void
+    {
+        $people = [
+            [
+                'first_name' => 'Enzo',
+                'last_name' => 'Moita',
+                'photo_path' => 'photos/Enzo.png',
+                'description' => 'Passionné de course à pied.',
+                'class' => '3A Dev',
+                'gender' => 'Homme',
+                'age' => 23,
+                'height' => 184,
+                'hair_color' => 'Brun',
+                'city' => 'Paris',
+                'origin' => 'Portugal / Espagne',
+                'hobby' => 'Sport / Gaming',
+                'specialization' => 'Dev',
+            ],
+            [
+                'first_name' => 'Axel',
+                'last_name' => 'Barbellion',
+                'photo_path' => 'photos/Axel.png',
+                'description' => 'Quasiment plus rien sur le caillou',
+                'class' => '3A Dev',
+                'gender' => 'Homme',
+                'age' => 22,
+                'height' => 174,
+                'hair_color' => 'Brun',
+                'city' => 'Campagne',
+                'origin' => 'France / Pologne',
+                'hobby' => 'One piece / Faire des crêpes',
+                'specialization' => 'Dev',
+            ],
+            [
+                'first_name' => 'Baptiste',
+                'last_name' => 'Roy',
+                'photo_path' => 'photos/Baptiste.png',
+                'description' => 'Surnommé Naingui 1, passionné de moto.',
+                'class' => '3A Dev',
+                'gender' => 'Homme',
+                'age' => 23,
+                'height' => 170,
+                'hair_color' => 'Roux',
+                'city' => 'La Queue-en-Brie',
+                'origin' => 'Danemark / France',
+                'hobby' => 'Moto',
+                'specialization' => 'Dev',
+            ],
+            [
+                'first_name' => 'Mathis',
+                'last_name' => 'Vidueira',
+                'photo_path' => 'photos/Mathis.png',
+                'description' => 'Surnommé Pedri, joueur de tennis. Origine espagnole.',
+                'class' => '3A Dev',
+                'gender' => 'Homme',
+                'age' => 22,
+                'height' => 172,
+                'hair_color' => 'Brun',
+                'city' => 'Livry-Gargan',
+                'origin' => 'Espagne / France',
+                'hobby' => 'Tennis',
+                'specialization' => 'Dev',
+            ],
+            [
+                'first_name' => 'Fritzi',
+                'last_name' => 'Frois',
+                'photo_path' => 'photos/Fritzi.png',
+                'description' => 'Surnommée Joqueta, adore les activités manuelles : dessin, peinture, sculpture.',
+                'class' => '3A Dev',
+                'gender' => 'Femme',
+                'age' => 21,
+                'height' => 153,
+                'hair_color' => 'Brune',
+                'city' => 'Paris',
+                'origin' => 'Inde / Portugal',
+                'hobby' => 'Figma',
+                'specialization' => 'Dev',
+            ],
+            [
+                'first_name' => 'Abdoulayé',
+                'last_name' => 'Diagne',
+                'photo_path' => 'photos/Abdoulaye.png',
+                'description' => 'Surnommé Maths, fan de One Piece. Origine sénégalaise.',
+                'class' => '3A Dev',
+                'gender' => 'Homme',
+                'age' => 24,
+                'height' => 174,
+                'hair_color' => 'Noir',
+                'city' => 'Drancy',
+                'origin' => 'Sénégal / France',
+                'hobby' => 'One Piece',
+                'specialization' => 'Dev',
+            ],
+        ];
+    foreach ($people as $person) {
+            Person::create($person);
+        }
+    }
+}
