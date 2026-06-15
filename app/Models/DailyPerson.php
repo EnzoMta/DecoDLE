@@ -19,7 +19,6 @@ class DailyPerson extends Model
         'date' => 'date',
     ];
 
-    // ─── Relations ───────────────────────────────────
     public function person(): BelongsTo
     {
         return $this->belongsTo(Person::class);
