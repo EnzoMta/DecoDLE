@@ -30,7 +30,7 @@
     @if (! $won && count($guesses) === 0)
     <x-game.card class="max-w-lg text-center space-y-3">
         <p class="text-sm uppercase tracking-widest text-decode-pop/70">Mode Classique</p>
-        <h2 class="text-2xl font-bold">Devine l'élève de Decode d'aujourd'hui !</h2>
+        <h2 class="text-2xl font-bold">Devine l'élève de Decode !</h2>
         <p class="text-white/60">Tape n'importe quel prénom pour commencer.</p>
         @if ($this->yesterdayPerson)
         <p class="text-sm text-white/50">
