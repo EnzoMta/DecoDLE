@@ -61,7 +61,7 @@
     <flux:callout variant="success" icon="check-circle" class="w-full max-w-md mt-6">
         <flux:callout.heading>Félicitations !!!</flux:callout.heading>
         <flux:callout.text>
-            Tu as trouvé {{ $target->full_name }} en {{ count($guesses) }} tentative(s).
+            Tu as trouvé {{ $target?->full_name ?? 'cette personne' }} en {{ count($guesses) }} tentative(s).
         </flux:callout.text>
     </flux:callout>
     @endif
