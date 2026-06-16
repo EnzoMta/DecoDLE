@@ -12,9 +12,6 @@
         <p class="text-zinc-400 text-sm mb-2">
             Devine l'élève caché derrière ces emojis ! Un nouvel indice se dévoile à chaque mauvaise tentative.
         </p>
-        <p class="text-sm text-red-400 font-medium">
-            {{ $this->winnersToday }} {{ $this->winnersToday > 1 ? 'personnes ont' : 'personne a' }} déjà trouvé !
-        </p>
         @if ($this->yesterdayPerson)
         <p class="mt-2 text-zinc-500 text-sm">
             L'élève d'hier était
