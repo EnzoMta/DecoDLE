@@ -56,9 +56,6 @@
             Tu as trouvé {{ $target->full_name }} en {{ count($guesses) }} tentative(s).
         </flux:callout.text>
     </flux:callout>
-    <flux:button wire:click="restart" variant="primary" class="mb-6">
-        Rejouer avec une autre personne
-    </flux:button>
     @endif
 
     {{-- Input --}}
@@ -109,4 +106,8 @@
         </div>
     </div>
     @endif
+
+    <div class="mt-10">
+        <x-game.restart-button />
+    </div>
 </div>
