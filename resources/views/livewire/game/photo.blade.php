@@ -25,6 +25,7 @@
             src="{{ route('photos.show', basename($target->photo_path)) }}"
             alt="Qui est-ce ?"
             class="w-64 h-64 object-cover rounded-2xl shadow-2xl border-2 border-zinc-600 transition-all duration-700"
+            style="filter: {{ $this->blurFilter }}"
         />
         @unless ($won)
         <div class="absolute inset-0 rounded-2xl ring-1 ring-inset ring-white/10 pointer-events-none"></div>
@@ -118,4 +119,8 @@
         </div>
     </div>
     @endif
+
+    <div class="mt-10">
+        <x-game.restart-button />
+    </div>
 </div>
