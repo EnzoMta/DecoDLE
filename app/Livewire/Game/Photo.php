@@ -9,36 +9,55 @@ use App\Models\Person;
 use Livewire\Attributes\Computed;
 use App\Models\Score;
 
-
-
-class Classic extends Component
+class Photo extends Component
 {
     public ?Person $target = null;
     public string $input = '';
     public bool $won = false;
     public array $guesses = [];
 
-    private function dailyKey(): string
-    {
-        return 'daily.classic.' . now()->toDateString();
-    }
+
+    private const BLUR_LEVELS = [
+        'blur(20px) grayscale(100%)',
+        'blur(14px) grayscale(100%)',
+        'blur(9px) grayscale(80%)',
+        'blur(5px) grayscale(60%)',
+        'blur(2px) grayscale(30%)',
+        'blur(0px) grayscale(0%)',
+    ];
 
     public function mount(): void
     {
-        $this->target = DailyPerson::forToday(GameType::CLASSIC)
+        $this->target = DailyPerson::forToday(GameType::PHOTO)
             ->first()
             ?->person;
-        if ($saved = session($this->dailyKey())) {
-            $this->guesses = $saved['guesses'];
-            $this->won     = $saved['won'];
-        }
     }
+
+    #[Computed]
+    public function blurFilter(): string
+    {
+        if ($this->won) {
+            return 'blur(0px) grayscale(0%)';
+        }
+
+        $index = min(count($this->guesses), count(self::BLUR_LEVELS) - 1);
+
+        return self::BLUR_LEVELS[$index];
+    }
+
+    #[Computed]
+    public function blurStep(): int
+    {
+        return min(count($this->guesses), count(self::BLUR_LEVELS) - 1);
+    }
+
     #[Computed]
     public function suggestions()
     {
         if (strlen($this->input) < 1) {
             return collect();
         }
+
         $alreadyGuessed = collect($this->guesses)
             ->pluck('first_name')
             ->toArray();
@@ -58,40 +77,14 @@ class Classic extends Component
         $this->input = $person->first_name;
         $this->submitGuess();
     }
-    private function compareGuess(Person $guess, Person $target): array
-    {
-        $guessAttrs  = $guess->getComparableAttributes();
-        $targetAttrs = $target->getComparableAttributes();
 
-        $numeric = ['age', 'height'];
-        $result  = [];
-
-        foreach ($guessAttrs as $key => $value) {
-            $targetValue = $targetAttrs[$key];
-
-            if ($value === $targetValue) {
-                $status = 'exact';
-            } elseif (in_array($key, $numeric, true)) {
-                $status = $value < $targetValue ? 'higher' : 'lower';
-            } else {
-                $status = 'wrong';
-            }
-
-            $result[$key] = [
-                'value'  => $value,
-                'status' => $status,
-            ];
-        }
-
-        return $result;
-    }
     public function submitGuess(): void
     {
-        if ($this->won) return;
         if (! $this->target) {
             $this->addError('input', "Aucune personne du jour, contacte un admin.");
             return;
         }
+
         $alreadyGuessed = collect($this->guesses)->pluck('first_name')->toArray();
         if (in_array($this->input, $alreadyGuessed, true)) {
             $this->addError('input', "Tu as déjà tenté ce prénom.");
@@ -108,7 +101,7 @@ class Classic extends Component
         $this->guesses[] = [
             'first_name' => $guess->first_name,
             'last_name'  => $guess->last_name,
-            'comparison' => $this->compareGuess($guess, $this->target),
+            'correct'    => $guess->id === $this->target->id,
         ];
 
         $this->input = '';
@@ -116,15 +109,6 @@ class Classic extends Component
         if ($guess->id === $this->target->id) {
             $this->won = true;
         }
-        $this->persistDaily();
-    }
-
-    private function persistDaily(): void
-    {
-        session([$this->dailyKey() => [
-            'guesses' => $this->guesses,
-            'won'     => $this->won,
-        ]]);
     }
 
     public function restart(): void
@@ -138,7 +122,7 @@ class Classic extends Component
     #[Computed]
     public function yesterdayPerson(): ?Person
     {
-        return DailyPerson::where('game_type', GameType::CLASSIC->value)
+        return DailyPerson::where('game_type', GameType::PHOTO->value)
             ->where('date', now()->subDay()->toDateString())
             ->first()
             ?->person;
@@ -147,14 +131,14 @@ class Classic extends Component
     #[Computed]
     public function winnersToday(): int
     {
-        return Score::where('game_type', GameType::CLASSIC->value)
+        return Score::where('game_type', GameType::PHOTO->value)
             ->where('date', now()->toDateString())
             ->where('won', true)
             ->count();
     }
+
     public function render()
     {
-
-        return view('livewire.game.classic');
+        return view('livewire.game.photo');
     }
 }

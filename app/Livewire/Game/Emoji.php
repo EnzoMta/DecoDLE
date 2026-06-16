@@ -9,36 +9,37 @@ use App\Models\Person;
 use Livewire\Attributes\Computed;
 use App\Models\Score;
 
-
-
-class Classic extends Component
+class Emoji extends Component
 {
     public ?Person $target = null;
     public string $input = '';
     public bool $won = false;
     public array $guesses = [];
 
-    private function dailyKey(): string
-    {
-        return 'daily.classic.' . now()->toDateString();
-    }
-
     public function mount(): void
     {
-        $this->target = DailyPerson::forToday(GameType::CLASSIC)
+        $this->target = DailyPerson::forToday(GameType::EMOJI)
             ->first()
             ?->person;
-        if ($saved = session($this->dailyKey())) {
-            $this->guesses = $saved['guesses'];
-            $this->won     = $saved['won'];
-        }
     }
+
+    #[Computed]
+    public function revealedCount(): int
+    {
+        if ($this->won) {
+            return 4;
+        }
+
+        return min(count($this->guesses) + 1, 4);
+    }
+
     #[Computed]
     public function suggestions()
     {
         if (strlen($this->input) < 1) {
             return collect();
         }
+
         $alreadyGuessed = collect($this->guesses)
             ->pluck('first_name')
             ->toArray();
@@ -58,40 +59,14 @@ class Classic extends Component
         $this->input = $person->first_name;
         $this->submitGuess();
     }
-    private function compareGuess(Person $guess, Person $target): array
-    {
-        $guessAttrs  = $guess->getComparableAttributes();
-        $targetAttrs = $target->getComparableAttributes();
 
-        $numeric = ['age', 'height'];
-        $result  = [];
-
-        foreach ($guessAttrs as $key => $value) {
-            $targetValue = $targetAttrs[$key];
-
-            if ($value === $targetValue) {
-                $status = 'exact';
-            } elseif (in_array($key, $numeric, true)) {
-                $status = $value < $targetValue ? 'higher' : 'lower';
-            } else {
-                $status = 'wrong';
-            }
-
-            $result[$key] = [
-                'value'  => $value,
-                'status' => $status,
-            ];
-        }
-
-        return $result;
-    }
     public function submitGuess(): void
     {
-        if ($this->won) return;
         if (! $this->target) {
             $this->addError('input', "Aucune personne du jour, contacte un admin.");
             return;
         }
+
         $alreadyGuessed = collect($this->guesses)->pluck('first_name')->toArray();
         if (in_array($this->input, $alreadyGuessed, true)) {
             $this->addError('input', "Tu as déjà tenté ce prénom.");
@@ -108,7 +83,7 @@ class Classic extends Component
         $this->guesses[] = [
             'first_name' => $guess->first_name,
             'last_name'  => $guess->last_name,
-            'comparison' => $this->compareGuess($guess, $this->target),
+            'correct'    => $guess->id === $this->target->id,
         ];
 
         $this->input = '';
@@ -116,29 +91,12 @@ class Classic extends Component
         if ($guess->id === $this->target->id) {
             $this->won = true;
         }
-        $this->persistDaily();
-    }
-
-    private function persistDaily(): void
-    {
-        session([$this->dailyKey() => [
-            'guesses' => $this->guesses,
-            'won'     => $this->won,
-        ]]);
-    }
-
-    public function restart(): void
-    {
-        $this->target  = Person::inRandomOrder()->first();
-        $this->guesses = [];
-        $this->won     = false;
-        $this->input   = '';
     }
 
     #[Computed]
     public function yesterdayPerson(): ?Person
     {
-        return DailyPerson::where('game_type', GameType::CLASSIC->value)
+        return DailyPerson::where('game_type', GameType::EMOJI->value)
             ->where('date', now()->subDay()->toDateString())
             ->first()
             ?->person;
@@ -147,14 +105,23 @@ class Classic extends Component
     #[Computed]
     public function winnersToday(): int
     {
-        return Score::where('game_type', GameType::CLASSIC->value)
+        return Score::where('game_type', GameType::EMOJI->value)
             ->where('date', now()->toDateString())
             ->where('won', true)
             ->count();
     }
+
+    public function restart(): void
+    {
+        $this->target = Person::inRandomOrder()->first();
+        $this->guesses = [];
+        $this->won = false;
+        $this->input = '';
+        unset($this->revealedCount);
+    }
+
     public function render()
     {
-
-        return view('livewire.game.classic');
+        return view('livewire.game.emoji');
     }
 }

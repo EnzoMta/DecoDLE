@@ -24,6 +24,11 @@ class DailyPersonSeeder extends Seeder
             ['person_id' => 1],
             ['game_type' => GameType::PHOTO->value, 'date' => now()->toDateString()],
         );
+
+        DailyPerson::updateOrCreate(
+            ['game_type' => GameType::EMOJI->value, 'date' => now()->toDateString()],
+            ['person_id' => 3],
+        );
     }
 }
 
