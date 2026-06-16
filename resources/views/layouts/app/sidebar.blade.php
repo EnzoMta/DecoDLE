@@ -8,7 +8,7 @@
 <body class="min-h-screen bg-white dark:bg-zinc-800">
     <flux:sidebar sticky collapsible="mobile" class="border-e border-zinc-200 bg-zinc-50 dark:border-zinc-700 dark:bg-zinc-900">
         <flux:sidebar.header>
-            <x-app-logo :sidebar="true" href="" wire:navigate />
+            <x-app-logo :sidebar="true" href="{{ route('dashboard') }}" wire:navigate />
             <flux:sidebar.collapse class="lg:hidden" />
         </flux:sidebar.header>
 
@@ -17,18 +17,23 @@
                 <flux:sidebar.item icon="user" :href="route('game.classic')" :current="request()->routeIs('game.classic')" wire:navigate>
                     {{ __('Classique') }}
                 </flux:sidebar.item>
-                <flux:sidebar.item icon="face-smile" :href="route('game.emoji')" :current="request()->routeIs('game.emoji')" wire:navigate>
-                    {{ __('Emoji') }}
-                </flux:sidebar.item>
-                <flux:sidebar.item icon="photo" :href="route('game.photo')" :current="request()->routeIs('game.photo')" wire:navigate>
-                    {{ __('Photo') }}
-                </flux:sidebar.item>
             </flux:sidebar.group>
         </flux:sidebar.nav>
 
         <flux:spacer />
 
-
+        @auth
+        <x-desktop-user-menu class="hidden lg:block" :name="auth()->user()->name" />
+        @else
+        <div class="hidden lg:flex flex-col gap-2 px-2">
+            <flux:button :href="route('login')" variant="primary" size="sm" class="w-full">
+                {{ __('Connexion') }}
+            </flux:button>
+            <flux:button :href="route('register')" variant="ghost" size="sm" class="w-full">
+                {{ __('Inscription') }}
+            </flux:button>
+        </div>
+        @endauth
     </flux:sidebar>
 
     <!-- Mobile User Menu -->
