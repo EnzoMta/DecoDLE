@@ -55,6 +55,9 @@
     @endif
 
     @if ($won)
+    <img src="{{ asset('gifs/Winner.gif') }}"
+        alt="Victoire !"
+        class="w-64 mx-auto mt-4 rounded-xl shadow-lg" />
     <flux:callout variant="success" icon="check-circle" class="w-full max-w-md mt-6">
         <flux:callout.heading>Félicitations !!!</flux:callout.heading>
         <flux:callout.text>

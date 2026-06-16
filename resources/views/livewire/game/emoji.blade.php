@@ -2,9 +2,9 @@
     <h1 class="text-2xl font-bold mb-2">DecoDLE - Mode Emoji</h1>
 
     @if (! $target)
-        <p class="text-red-500 text-center mt-4">
-            ⚠️ Aucune personne n'a été tirée pour aujourd'hui.
-        </p>
+    <p class="text-red-500 text-center mt-4">
+        ⚠️ Aucune personne n'a été tirée pour aujourd'hui.
+    </p>
     @endif
 
     @unless ($won)
@@ -28,18 +28,17 @@
     @if ($target)
     <div class="flex gap-4 my-8">
         @foreach ([1, 2, 3, 4] as $i)
-            @if ($i <= $this->revealedCount)
-                <div
-                    class="cell-reveal w-20 h-20 flex items-center justify-center text-5xl rounded-2xl bg-zinc-700 shadow-lg border-2 border-zinc-500"
-                >
-                    {{ $target->{'emoji_' . $i} ?? '?' }}
-                </div>
+        @if ($i <= $this->revealedCount)
+            <div
+                class="cell-reveal w-20 h-20 flex items-center justify-center text-5xl rounded-2xl bg-zinc-700 shadow-lg border-2 border-zinc-500">
+                {{ $target->{'emoji_' . $i} ?? '?' }}
+            </div>
             @else
-                <div class="w-20 h-20 flex items-center justify-center text-3xl rounded-2xl bg-zinc-800 border-2 border-dashed border-zinc-600 text-zinc-500 select-none">
-                    ?
-                </div>
+            <div class="w-20 h-20 flex items-center justify-center text-3xl rounded-2xl bg-zinc-800 border-2 border-dashed border-zinc-600 text-zinc-500 select-none">
+                ?
+            </div>
             @endif
-        @endforeach
+            @endforeach
     </div>
     <p class="text-xs text-zinc-500 mb-6 tracking-wide uppercase">
         {{ $this->revealedCount }} / 4 indice(s) révélé(s)
@@ -48,6 +47,9 @@
 
     {{-- Win callout --}}
     @if ($won)
+    <img src="{{ asset('gifs/Winner.gif') }}"
+        alt="Victoire !"
+        class="w-64 mx-auto mt-4 rounded-xl shadow-lg" />
     <flux:callout variant="success" icon="check-circle" class="w-full max-w-md mb-4">
         <flux:callout.heading>Félicitations !!!</flux:callout.heading>
         <flux:callout.text>
@@ -69,7 +71,7 @@
             autofocus />
 
         @error('input')
-            <p class="text-red-400 text-sm mt-1">{{ $message }}</p>
+        <p class="text-red-400 text-sm mt-1">{{ $message }}</p>
         @enderror
 
         @if (strlen($input) > 0 && $this->suggestions->isNotEmpty())
@@ -93,16 +95,14 @@
         <h3 class="text-xs font-bold uppercase text-zinc-400 mb-3 tracking-wider">Tentatives :</h3>
         <div class="flex flex-col gap-2">
             @foreach (array_reverse($guesses) as $guess)
-            <div @class([
-                'flex items-center justify-between rounded-lg px-4 py-3',
-                'bg-green-700 border border-green-500' => $guess['correct'],
+            <div @class([ 'flex items-center justify-between rounded-lg px-4 py-3' , 'bg-green-700 border border-green-500'=> $guess['correct'],
                 'bg-zinc-800 border border-zinc-700' => ! $guess['correct'],
-            ])>
+                ])>
                 <span class="text-white font-medium">{{ $guess['first_name'] }} {{ $guess['last_name'] }}</span>
                 @if ($guess['correct'])
-                    <span class="text-green-300 text-sm">✓</span>
+                <span class="text-green-300 text-sm">✓</span>
                 @else
-                    <span class="text-red-400 text-sm">✗</span>
+                <span class="text-red-400 text-sm">✗</span>
                 @endif
             </div>
             @endforeach
