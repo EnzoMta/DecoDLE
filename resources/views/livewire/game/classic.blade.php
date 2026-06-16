@@ -105,4 +105,8 @@
         @endif
     </form>
     @endunless
+
+    <div class="mt-10">
+        <x-game.restart-button />
+    </div>
 </div>

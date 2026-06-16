@@ -111,6 +111,14 @@ class Photo extends Component
         }
     }
 
+    public function restart(): void
+    {
+        $this->target  = Person::inRandomOrder()->first();
+        $this->guesses = [];
+        $this->won     = false;
+        $this->input   = '';
+    }
+
     #[Computed]
     public function yesterdayPerson(): ?Person
     {
