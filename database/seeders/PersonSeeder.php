@@ -124,6 +124,25 @@ class PersonSeeder extends Seeder
                 'emoji_3' => '🔢',
                 'emoji_4' => '✨',
             ],
+            [
+                'first_name' => 'Yanis',
+                'last_name' => 'Lambeau',
+                'photo_path' => 'photos/Yanis.png',
+                'description' => 'Surnommé Yanis, passionné de musique et de danse.',
+                'class' => '3A Dev',
+                'gender' => 'Homme',
+                'age' => 21,
+                'height' => 193,
+                'hair_color' => 'Noir',
+                'city' => 'Livry-Gargan ',
+                'origin' => 'Guadeloupe / France',
+                'hobby' => 'MHA rumble / les animés / la musique',
+                'specialization' => 'Dev',
+                'emoji_1' => '💤',
+                'emoji_2' => '🇬🇵',
+                'emoji_3' => '🎵',
+                'emoji_4' => '🏴‍☠️',
+            ]
         ];
     foreach ($people as $person) {
             Person::create($person);
