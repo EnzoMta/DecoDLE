@@ -92,7 +92,6 @@ class Dashboard extends Component
         unset($data['photo']);
 
         if ($this->photo) {
-            // Nom lisible basé sur le prénom + nom (slugifié pour éviter accents/espaces)
             $extension = $this->photo->getClientOriginalExtension();
             $filename  = Str::slug($this->first_name . '-' . $this->last_name) . '.' . $extension;
 
