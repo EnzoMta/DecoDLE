@@ -15,6 +15,7 @@ class Photo extends Component
     public string $input = '';
     public bool $won = false;
     public array $guesses = [];
+    public int $restartCount = 0;
 
     private const BLUR_LEVELS = [
         'blur(20px) grayscale(100%)',
@@ -137,10 +138,11 @@ class Photo extends Component
 
     public function restart(): void
     {
-        $this->target  = Person::inRandomOrder()->first();
-        $this->guesses = [];
-        $this->won     = false;
-        $this->input   = '';
+        $this->target       = Person::inRandomOrder()->first();
+        $this->guesses      = [];
+        $this->won          = false;
+        $this->input        = '';
+        $this->restartCount++;
 
         $this->persist();
     }

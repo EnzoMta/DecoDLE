@@ -74,12 +74,6 @@
             Tape n'importe quel prénom pour commencer.
         </p>
 
-        @if (! $won)
-        <p class="text-sm text-red-400 font-medium">
-            {{ $this->winnersToday }} {{ $this->winnersToday > 1 ? 'personnes ont' : 'personne a' }} déjà trouvé !
-        </p>
-        @endif
-
         @if ($this->yesterdayPerson)
         <p class="mt-4 text-zinc-500">
             L'élève d'hier était

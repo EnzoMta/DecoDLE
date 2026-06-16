@@ -6,9 +6,6 @@
         <p class="text-zinc-400 text-sm mb-2">
             Devine l'élève caché dans la photo ! Elle devient de moins en moins floue à chaque mauvaise tentative.
         </p>
-        <p class="text-sm text-red-400 font-medium">
-            {{ $this->winnersToday }} {{ $this->winnersToday > 1 ? 'personnes ont' : 'personne a' }} déjà trouvé !
-        </p>
         @if ($this->yesterdayPerson)
         <p class="mt-2 text-zinc-500 text-sm">
             L'élève d'hier était
@@ -22,6 +19,7 @@
     @if ($target && $target->photo_path)
     <div class="relative mb-4">
         <img
+            wire:key="photo-{{ $restartCount }}"
             src="{{ route('photos.show', basename($target->photo_path)) }}"
             alt="Qui est-ce ?"
             class="w-64 h-64 object-cover rounded-2xl shadow-2xl border-2 border-zinc-600 transition-all duration-700"
