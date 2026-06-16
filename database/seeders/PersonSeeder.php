@@ -24,10 +24,6 @@ class PersonSeeder extends Seeder
                 'origin' => 'Portugal / Espagne',
                 'hobby' => 'Sport / Gaming',
                 'specialization' => 'Dev',
-                'emoji_1' => '🏃‍♂️',
-                'emoji_2' => '🎮',
-                'emoji_3' => '🗼',
-                'emoji_4' => '🇵🇹',
             ],
             [
                 'first_name' => 'Axel',
@@ -43,10 +39,6 @@ class PersonSeeder extends Seeder
                 'origin' => 'France / Pologne',
                 'hobby' => 'One piece / Faire des crêpes',
                 'specialization' => 'Dev',
-                'emoji_1' => '🏴‍☠️',
-                'emoji_2' => '🥞',
-                'emoji_3' => '🌾',
-                'emoji_4' => '🇵🇱',
             ],
             [
                 'first_name' => 'Baptiste',
@@ -62,10 +54,6 @@ class PersonSeeder extends Seeder
                 'origin' => 'Danemark / France',
                 'hobby' => 'Moto',
                 'specialization' => 'Dev',
-                'emoji_1' => '🏍️',
-                'emoji_2' => '🦊',
-                'emoji_3' => '🇩🇰',
-                'emoji_4' => '🔧',
             ],
             [
                 'first_name' => 'Mathis',
@@ -81,10 +69,6 @@ class PersonSeeder extends Seeder
                 'origin' => 'Espagne / France',
                 'hobby' => 'Tennis',
                 'specialization' => 'Dev',
-                'emoji_1' => '🎾',
-                'emoji_2' => '🇪🇸',
-                'emoji_3' => '🎯',
-                'emoji_4' => '🏙️',
             ],
             [
                 'first_name' => 'Fritzi',
@@ -100,10 +84,6 @@ class PersonSeeder extends Seeder
                 'origin' => 'Inde / Portugal',
                 'hobby' => 'Figma',
                 'specialization' => 'Dev',
-                'emoji_1' => '🎨',
-                'emoji_2' => '🇮🇳',
-                'emoji_3' => '✏️',
-                'emoji_4' => '📐',
             ],
             [
                 'first_name' => 'Abdoulayé',
@@ -119,10 +99,6 @@ class PersonSeeder extends Seeder
                 'origin' => 'Sénégal / France',
                 'hobby' => 'One Piece',
                 'specialization' => 'Dev',
-                'emoji_1' => '🏴‍☠️',
-                'emoji_2' => '🇸🇳',
-                'emoji_3' => '🔢',
-                'emoji_4' => '✨',
             ],
         ];
     foreach ($people as $person) {
