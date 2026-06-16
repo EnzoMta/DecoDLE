@@ -16,7 +16,6 @@ class Photo extends Component
     public bool $won = false;
     public array $guesses = [];
 
-
     private const BLUR_LEVELS = [
         'blur(20px) grayscale(100%)',
         'blur(14px) grayscale(100%)',
@@ -26,11 +25,32 @@ class Photo extends Component
         'blur(0px) grayscale(0%)',
     ];
 
+    private function sessionKey(): string
+    {
+        return 'game.photo.current';
+    }
+
     public function mount(): void
     {
-        $this->target = DailyPerson::forToday(GameType::PHOTO)
-            ->first()
-            ?->person;
+        if ($saved = session($this->sessionKey())) {
+            $this->target  = Person::find($saved['target_id']);
+            $this->guesses = $saved['guesses'];
+            $this->won     = $saved['won'];
+        }
+
+        // Aucune partie sauvegardée (ou personne supprimée) → on en démarre une
+        if (! $this->target) {
+            $this->restart();
+        }
+    }
+
+    private function persist(): void
+    {
+        session([$this->sessionKey() => [
+            'target_id' => $this->target?->id,
+            'guesses'   => $this->guesses,
+            'won'       => $this->won,
+        ]]);
     }
 
     #[Computed]
@@ -80,6 +100,8 @@ class Photo extends Component
 
     public function submitGuess(): void
     {
+        if ($this->won) return;
+
         if (! $this->target) {
             $this->addError('input', "Aucune personne du jour, contacte un admin.");
             return;
@@ -109,6 +131,8 @@ class Photo extends Component
         if ($guess->id === $this->target->id) {
             $this->won = true;
         }
+
+        $this->persist();
     }
 
     public function restart(): void
@@ -117,6 +141,8 @@ class Photo extends Component
         $this->guesses = [];
         $this->won     = false;
         $this->input   = '';
+
+        $this->persist();
     }
 
     #[Computed]
