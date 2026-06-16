@@ -16,11 +16,31 @@ class Emoji extends Component
     public bool $won = false;
     public array $guesses = [];
 
+    private function sessionKey(): string
+    {
+        return 'game.emoji.current';
+    }
+
     public function mount(): void
     {
-        $this->target = DailyPerson::forToday(GameType::EMOJI)
-            ->first()
-            ?->person;
+        if ($saved = session($this->sessionKey())) {
+            $this->target  = Person::find($saved['target_id']);
+            $this->guesses = $saved['guesses'];
+            $this->won     = $saved['won'];
+        }
+
+        if (! $this->target) {
+            $this->restart();
+        }
+    }
+
+    private function persist(): void
+    {
+        session([$this->sessionKey() => [
+            'target_id' => $this->target?->id,
+            'guesses'   => $this->guesses,
+            'won'       => $this->won,
+        ]]);
     }
 
     #[Computed]
@@ -62,6 +82,8 @@ class Emoji extends Component
 
     public function submitGuess(): void
     {
+        if ($this->won) return;
+
         if (! $this->target) {
             $this->addError('input', "Aucune personne du jour, contacte un admin.");
             return;
@@ -91,6 +113,19 @@ class Emoji extends Component
         if ($guess->id === $this->target->id) {
             $this->won = true;
         }
+
+        $this->persist();
+    }
+
+    public function restart(): void
+    {
+        $this->target  = Person::inRandomOrder()->first();
+        $this->guesses = [];
+        $this->won     = false;
+        $this->input   = '';
+        unset($this->revealedCount);
+
+        $this->persist();
     }
 
     #[Computed]
@@ -109,15 +144,6 @@ class Emoji extends Component
             ->where('date', now()->toDateString())
             ->where('won', true)
             ->count();
-    }
-
-    public function restart(): void
-    {
-        $this->target = Person::inRandomOrder()->first();
-        $this->guesses = [];
-        $this->won = false;
-        $this->input = '';
-        unset($this->revealedCount);
     }
 
     public function render()
