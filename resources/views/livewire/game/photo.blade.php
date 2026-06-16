@@ -35,6 +35,7 @@
     @if ($target && $target->photo_path)
     <div class="flex flex-col items-center gap-4">
         <img
+            wire:key="photo-{{ $restartCount }}"
             src="{{ route('photos.show', basename($target->photo_path)) }}"
             alt="Qui est-ce ?"
             class="w-64 h-64 object-cover rounded-3xl shadow-2xl border border-white/15 transition-all duration-700"
