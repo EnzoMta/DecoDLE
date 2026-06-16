@@ -108,6 +108,7 @@ class Classic extends Component
         $this->guesses[] = [
             'first_name' => $guess->first_name,
             'last_name'  => $guess->last_name,
+            'photo_path' => $guess->photo_path,
             'comparison' => $this->compareGuess($guess, $this->target),
         ];
 
