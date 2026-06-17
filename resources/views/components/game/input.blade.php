@@ -3,7 +3,7 @@
 <div class="relative w-full max-w-md">
     <input
         {{ $attributes->merge(['class' =>
-            'w-full rounded-full bg-white text-zinc-900 placeholder-zinc-400
+            'w-full rounded-1xl bg-white text-zinc-900 placeholder-zinc-400
              px-6 py-4 pr-14 text-lg shadow-lg
              focus:outline-none focus:ring-4 focus:ring-decode-violet/50']) }}
         placeholder="{{ $placeholder }}"
