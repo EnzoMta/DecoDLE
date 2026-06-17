@@ -45,6 +45,7 @@
     <div class="w-full max-w-5xl overflow-x-auto">
         {{-- Header --}}
         <div class="grid grid-cols-10 gap-2 mb-2 text-xs font-bold uppercase tracking-wider text-white/50">
+            <div class="text-center">Photo</div>
             <div class="text-center">Prénom</div>
             @foreach ($labels as $label)
             <div class="text-center">{{ $label }}</div>
