@@ -17,7 +17,6 @@ return new class extends Migration
             $table->rememberToken();
             $table->boolean('is_admin')->default(false);
 
-            // Colonnes Fortify (2FA) — ton User utilise TwoFactorAuthenticatable
             $table->text('two_factor_secret')->nullable();
             $table->text('two_factor_recovery_codes')->nullable();
             $table->timestamp('two_factor_confirmed_at')->nullable();
