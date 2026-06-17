@@ -29,6 +29,14 @@
     --color-accent: var(--color-neutral-800);
     --color-accent-content: var(--color-neutral-800);
     --color-accent-foreground: var(--color-white);
+
+    /* --- DA Decode --- */
+    --color-decode-bg: #0b0820; /* fond profond */
+    --color-decode-surface: #1a1342; /* base des cards */
+    --color-decode-surface-2: #2a1d6b; /* haut du dégradé card */
+    --color-decode-violet: #6d4aff; /* primaire / accent */
+    --color-decode-violet-deep: #3a1d8a;
+    --color-decode-pop: #c7d2fe; /* highlight clair (ex: le "27.42") */
 }
 
 @layer theme {

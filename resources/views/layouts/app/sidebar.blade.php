@@ -5,7 +5,8 @@
     @include('partials.head')
 </head>
 
-<body class="min-h-screen bg-white dark:bg-zinc-800">
+<body class="min-h-screen text-white bg-decode-bg
+             bg-[radial-gradient(ellipse_at_top,_var(--color-decode-violet-deep)_0%,_var(--color-decode-bg)_55%)]">
     <flux:sidebar sticky collapsible="mobile" class="border-e border-zinc-200 bg-zinc-50 dark:border-zinc-700 dark:bg-zinc-900">
         <flux:sidebar.header>
             <x-app-logo :sidebar="true" href="" wire:navigate />
