@@ -39,7 +39,7 @@ class Photo extends Component
             $this->won     = $saved['won'];
         }
 
-        // Aucune partie sauvegardée (ou personne supprimée) → on en démarre une
+
         if (! $this->target) {
             $this->restart();
         }
