@@ -18,12 +18,20 @@ class Classic extends Component
     public bool $won = false;
     public array $guesses = [];
 
+    private function dailyKey(): string
+    {
+        return 'daily.classic.' . now()->toDateString();
+    }
 
     public function mount(): void
     {
         $this->target = DailyPerson::forToday(GameType::CLASSIC)
             ->first()
             ?->person;
+        if ($saved = session($this->dailyKey())) {
+            $this->guesses = $saved['guesses'];
+            $this->won     = $saved['won'];
+        }
     }
     #[Computed]
     public function suggestions()
@@ -79,6 +87,7 @@ class Classic extends Component
     }
     public function submitGuess(): void
     {
+        if ($this->won) return;
         if (! $this->target) {
             $this->addError('input', "Aucune personne du jour, contacte un admin.");
             return;
@@ -99,6 +108,7 @@ class Classic extends Component
         $this->guesses[] = [
             'first_name' => $guess->first_name,
             'last_name'  => $guess->last_name,
+            'photo_path' => $guess->photo_path,
             'comparison' => $this->compareGuess($guess, $this->target),
         ];
 
@@ -107,7 +117,25 @@ class Classic extends Component
         if ($guess->id === $this->target->id) {
             $this->won = true;
         }
+        $this->persistDaily();
     }
+
+    private function persistDaily(): void
+    {
+        session([$this->dailyKey() => [
+            'guesses' => $this->guesses,
+            'won'     => $this->won,
+        ]]);
+    }
+
+    public function restart(): void
+    {
+        $this->target  = Person::inRandomOrder()->first();
+        $this->guesses = [];
+        $this->won     = false;
+        $this->input   = '';
+    }
+
     #[Computed]
     public function yesterdayPerson(): ?Person
     {

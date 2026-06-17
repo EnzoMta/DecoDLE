@@ -11,6 +11,7 @@ class DatabaseSeeder extends Seeder
         $this->call([
             PersonSeeder::class,
             DailyPersonSeeder::class,
+            AdminSeeder::class,
         ]);
     }
 }

@@ -10,12 +10,12 @@ return new class extends Migration
     {
         Schema::create('scores', function (Blueprint $table) {
             $table->id();
-            $table->string('session_id');         
-            $table->string('game_type');           
+            $table->string('session_id');
+            $table->string('game_type');
             $table->date('date');
             $table->integer('attempts')->default(0);
             $table->boolean('won')->default(false);
-            $table->json('guesses')->nullable();   
+            $table->json('guesses')->nullable();
             $table->timestamps();
 
             $table->unique(['session_id', 'game_type', 'date']);
