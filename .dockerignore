@@ -1,0 +1,21 @@
+# Dépendances régénérées dans l'image (composer install / npm ci)
+/vendor
+/node_modules
+
+# Assets : recompilés par `npm run build` dans le Dockerfile
+/public/build
+/public/hot
+/public/storage
+
+# Secrets & config locale (Render fournit ses propres variables d'env)
+.env
+.env.*
+
+# Inutile dans l'image
+.git
+.gitignore
+.github
+/tests
+/storage/logs/*
+docker-compose.yml
+README.md
