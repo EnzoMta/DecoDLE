@@ -11,7 +11,9 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware): void {
-        //
+        // Render (et tout reverse-proxy HTTPS) : on fait confiance au proxy
+        // pour que Laravel lise X-Forwarded-Proto et génère des URLs en https.
+        $middleware->trustProxies(at: '*');
     })
     ->withExceptions(function (Exceptions $exceptions): void {
         //
